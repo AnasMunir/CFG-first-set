@@ -4,14 +4,23 @@
 #include <stdbool.h>
 /*the CFG
   S>ABe
-  A>dB|eS|e
-  B>AS|b
+  A>dB|aS|e
+  B>cS|b
 */
 typedef struct node {
     //int val;
     struct node * next;
-    char arr[20];//the array to save CFG per line
+    char arr[7];//the array to save CFG per line
     }node_t;
+void print_list(node_t * root);
+void first_set(node_t * root,char c);
+char c, temp; int i=0; bool flag = true;
+ 
+    /*node_t * head = malloc(sizeof(node_t));
+    node_t * current = malloc(sizeof(node_t));
+    node_t * root = malloc(sizeof(node_t));
+    head = current;*/ 
+
 int main() {
     node_t * head = malloc(sizeof(node_t));
     node_t * current = malloc(sizeof(node_t));
@@ -19,7 +28,7 @@ int main() {
     head = current;
     
     FILE *fp;
-    char c, temp; int i; bool flag = true;
+    //char c, temp; int i=0; bool flag = true;
     fp = fopen("cfg.txt", "r");
     while((c = fgetc(fp)) != EOF) {
         if(c == '\n') {
@@ -27,7 +36,7 @@ int main() {
           //current->next->next = NULL;
           current = current->next;
           current->next = NULL;  
-          flag = true;
+          flag = true; i=0;
         }else if(c == '>' || c == ' '){continue;}
         else if(c == '|'){
             current->next = malloc(sizeof(node_t));
@@ -49,12 +58,31 @@ int main() {
         }
     }
     root = head;
+    first_set(root,'B');
+    //print_list(root);
+    fclose(fp);
+}
+void print_list(node_t * root) {
     while(root->next != NULL){
-        for(i=0; i<20; i++) {
+        for(i=1; i<7; i++) {
             printf("%c", root->arr[i]);
         }
         printf("\n");
         root = root->next;
     }
-    fclose(fp);
+}
+void first_set(node_t * root,char c){
+    node_t * shoot = root;
+    while(shoot->next != NULL){
+        if(shoot->arr[i] == c){
+            if(!(isupper(shoot->arr[i+1]))){
+                //first_set(shoot,shoot->arr[i+1]);
+                  printf("First of %c is {%c}\n",c,shoot->arr[i+1]);
+                  //break;  
+                } else{
+                     first_set(shoot,shoot->arr[i+1]);
+              }
+          }
+          shoot = shoot->next;
+    }
 }
