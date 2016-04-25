@@ -28,7 +28,7 @@ int main() {
           current = current->next;
           current->next = NULL;  
           flag = true;
-        }else if(c == '>'){continue;}
+        }else if(c == '>' || c == ' '){continue;}
         else if(c == '|'){
             current->next = malloc(sizeof(node_t));
             current = current->next;
