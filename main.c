@@ -12,14 +12,9 @@ typedef struct node {
     struct node * next;
     char arr[7];//the array to save CFG per line
     }node_t;
-void print_list(node_t * root);
-void first_set(node_t * root,char c);
-char c, temp; int i=0; bool flag = true;
- 
-    /*node_t * head = malloc(sizeof(node_t));
-    node_t * current = malloc(sizeof(node_t));
-    node_t * root = malloc(sizeof(node_t));
-    head = current;*/ 
+char print_list(node_t * root);
+char first_set(node_t * root,char c);
+char c, temp, nonTerminal; int i=0; bool flag = true;
 
 int main() {
     node_t * head = malloc(sizeof(node_t));
@@ -57,27 +52,31 @@ int main() {
            // continue;
         }
     }
-    root = head;
-    first_set(root,'B');
-    //print_list(root);
     fclose(fp);
+    root = head;
+    printf("Enter the non-terminal to find first set of\n");
+    scanf("%c", &nonTerminal);
+    printf("The first set of %c: ", nonTerminal);
+    first_set(root,nonTerminal);
+   // print_list(root);
 }
-void print_list(node_t * root) {
+char print_list(node_t * root) {
     while(root->next != NULL){
-        for(i=1; i<7; i++) {
+        for(i=0; i<7; i++) {
             printf("%c", root->arr[i]);
         }
         printf("\n");
         root = root->next;
     }
+    return 0;
 }
-void first_set(node_t * root,char c){
+char first_set(node_t * root,char c){
     node_t * shoot = root;
     while(shoot->next != NULL){
         if(shoot->arr[i] == c){
             if(!(isupper(shoot->arr[i+1]))){
                 //first_set(shoot,shoot->arr[i+1]);
-                  printf("First of %c is {%c}\n",c,shoot->arr[i+1]);
+                  printf("{%c}",shoot->arr[i+1]);
                   //break;  
                 } else{
                      first_set(shoot,shoot->arr[i+1]);
@@ -85,4 +84,6 @@ void first_set(node_t * root,char c){
           }
           shoot = shoot->next;
     }
+    printf("\n");
+    return 0;
 }
